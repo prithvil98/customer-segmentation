@@ -26,6 +26,17 @@ def calculate_rfm(df:pd.DataFrame)->pd.DataFrame:
     return rfm
 
 def score_rfm(rfm:pd.DataFrame)->pd.DataFrame:
+    rfm["R_score"]=pd.qcut(rfm["Recency"],q=5,labels=[5,4,3,2,1])
+    rfm['F_score']=pd.qcut(rfm["Frequency"],q=5,labels=[1,2,3,4,5])
+    rfm['M_score']=pd.qcut(rfm["Monetary"],q=5,labels=[1,2,3,4,5])
+    rfm["RFM_score"]=rfm["R_score"].astype(int) + rfm["F_score"].astype(int) + rfm["M_score"].astype(int)
+    logger.info(f"RFM score range {rfm['RFM_score'].min()} to {rfm['RFM_score'].max()}")
+    return rfm
+
+
+
+
+
 
 
 
